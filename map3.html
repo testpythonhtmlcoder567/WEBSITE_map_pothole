@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8">
+    <title>Technology & AI Screensaver</title>
+      <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <style>
+      body {
+
+        background-image: url("https://png.pngtree.com/background/20210711/original/pngtree-white-geometric-origami-background-material-picture-image_1147878.jpg"); /* technology & AI image */
+       background-repeat: no-repeat;
+         background-attachment: fixed;
+  background-size: 100% 100%;
+
+      }
+
+
+    </style>
+  </head>
+
+  <body>
+
+
+	<h1>Potholes location</h1>
+<b>Number of POTHOLES DETECTED: <span id="row_count"></span></b>
+
+  <script>
+    $(document).ready(function() {
+      // URL to your CSV file in your GitHub repository
+      var csv_url = 'https://raw.githubusercontent.com/testpythonhtmlcoder567/mapdata_test/main/locations.csv';
+
+      // Use jQuery to read the CSV file and count the number of rows (excluding the header)
+      $.get(csv_url, function(data) {
+        var rows = data.trim().split(/\r?\n/);
+        rows = rows.slice(1); // skip the first row (header)
+        var row_count = rows.length;
+        $('#row_count').text(row_count);
+      });
+    });
+  </script>
+	<iframe src="map.html" width="600" height="450" frameborder="0" style="border:0;"></iframe>
+
+</body>
+</html>
