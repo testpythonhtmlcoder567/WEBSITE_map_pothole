@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html>
+<body>
+
+<p>Click the button to get your coordinates.</p>
+
+<button onclick="getLocation()">Capture Location</button>
+
+<p id="demo"></p>
+
+<button onclick="downloadCSV()" id="downloadButton" disabled>Download CSV</button>
+
+<script>
+var x = document.getElementById("demo");
+var locations = [];
+var downloadButton = document.getElementById("downloadButton");
+
+function getLocation() {
+  if (navigator.geolocation) {
+    navigator.geolocation.getCurrentPosition(savePosition);
+  } else { 
+    x.innerHTML = "Geolocation is not supported by this browser.";
+  }
+}
+
+function savePosition(position) {
+    var location = {
+        name: "Location " + (locations.length + 1),
+        latitude: position.coords.latitude,
+        longitude: position.coords.longitude
+    };
+    
+    locations.push(location);
+    
+    x.innerHTML += "Latitude: " + location.latitude + 
+    "<br>Longitude: " + location.longitude + "<br>";
+    
+    downloadButton.disabled = false;
+}
+
+function convertToCSV(arr) {
+    const array = [Object.keys(arr[0])].concat(arr.map(obj => Object.values(obj)));
+    return array.map(row => row.join(',')).join('\n');
+}
+
+function downloadCSV() {
+    var csv = convertToCSV(locations);
+    var filename = "locations.csv";
+    
+    var element = document.createElement('a');
+    element.setAttribute('href', 'data:text/csv;charset=utf-8,' + encodeURIComponent(csv));
+    element.setAttribute('download', filename);
+    
+    element.style.display = 'none';
+    document.body.appendChild(element);
+    
+    element.click();
+    
+    document.body.removeChild(element);
+}
+
+</script>
+
+</body>
+</html>
